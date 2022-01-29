@@ -1,4 +1,4 @@
-from helpers.constants import algo, PWD_HASH_SALT as secret
+from helpers.constants import algo, SECRET_HERE as secret
 from flask import request, abort
 from implemented import user_service
 import jwt

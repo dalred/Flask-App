@@ -1,7 +1,7 @@
 from service.user import UserService
 from flask import abort
 import datetime, calendar, jwt
-from helpers.constants import PWD_HASH_SALT as secret, algo
+from helpers.constants import SECRET_HERE as secret, algo
 
 
 class AuthService:

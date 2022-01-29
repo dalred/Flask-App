@@ -2,7 +2,7 @@ from dao.model.user import User
 from setup_db import db
 import base64
 import datetime, calendar, jwt, hashlib
-from helpers.constants import PWD_HASH_SALT as secret, PWD_HASH_ITERATIONS, algo
+from helpers.constants import SECRET_HERE as secret, PWD_HASH_ITERATIONS, algo
 from dao.model.director import Director
 from dao.model.movie import Movie
 from dao.model.genre import Genre

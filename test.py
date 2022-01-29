@@ -1,5 +1,5 @@
 import datetime, calendar, jwt
-from helpers.constants import PWD_HASH_SALT as secret, algo
+from helpers.constants import SECRET_HERE as secret, algo
 
 token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InZhc3lhIiwicm9sZSI6InVzZXIiLCJleHAiOjE2NTQ2MzczOTd9.FGDbjDh_-o0s4uQEU2hb2-Zc6nkRc1lcM1W-XJQNczM"
 
