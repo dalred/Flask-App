@@ -1,5 +1,6 @@
 from flask_restx import Resource, Namespace
 
+from helpers.decorators import admin_required, auth_required
 from implemented import user_service
 from dao.model.user import UserSchema
 from flask import request, jsonify, make_response
@@ -11,7 +12,8 @@ users_schema = UserSchema(many=True)
 
 @users_ns.route('/')
 class UsersView(Resource):
-    def get(self):
+    @admin_required
+    def get(self, user_id):
         role = request.args.get('role')
         username = request.args.get('username')
         data = {
@@ -25,22 +27,24 @@ class UsersView(Resource):
         user = user_service.create(req_json)
         return "", 201, {"location": f"/users/{user.id}"}
 
+    @auth_required
+    def delete(self, user_id: int):
+        user_service.delete(user_id)
+        return "", 204
+
+    @auth_required
+    def put(self, user_id: int):
+        req_json = request.json
+        user_service.update(req_json, user_id)
+        return "", 204
+
 @users_ns.route('/<int:uid>')
 class UserView(Resource):
-    def get(self, uid):
+    @admin_required
+    def get(self, user_id, uid):
         return make_response(jsonify(user_schema.dump(user_service.get_one(uid))), 200)
 
-    def put(self, uid: int):
-        req_json = request.json
-        user_service.update(req_json, uid)
-        return "", 204
 
-    def delete(self, uid: int):
-        user_service.delete(uid)
-        return "", 204
 
-    def patch(self, uid: int):
-        req_json = request.json
-        user_service.update(req_json, uid)
-        return "", 204
+
 

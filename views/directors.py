@@ -13,11 +13,11 @@ directors_schema = DirectorSchema(many=True)
 @directors_ns.route('/')
 class DirectorsView(Resource):
     @auth_required
-    def get(self):
+    def get(self, user_id):
         return make_response(jsonify(directors_schema.dump(director_service.get_all())), 200)
 
     @admin_required
-    def post(self):
+    def post(self, user_id):
         req_json = request.json
         director = director_service.create(req_json)
         return "", 201, {"location": f"/directors/{director.id}/"}
@@ -25,16 +25,16 @@ class DirectorsView(Resource):
 @directors_ns.route('/<int:uid>')
 class DirectorView(Resource):
     @auth_required
-    def get(self, uid):
+    def get(self, user_id, uid):
         return make_response(jsonify(director_schema.dump(director_service.get_one(uid))), 200)
 
     @admin_required
-    def put(self, uid: int):
+    def put(self, user_id, uid: int):
         req_json = request.json
         director_service.update(req_json, uid)
         return "", 204
 
     @admin_required
-    def delete(self, uid: int):
+    def delete(self, user_id, uid: int):
         director_service.delete(uid)
         return "", 204

@@ -18,10 +18,10 @@ def admin_required(func):
             role = user.get("role")
             if role != "admin":
                 abort(400)
+            return func(*args, **kwargs, user_id=user['id'])
         except Exception as e:
             print("JWT Decode Exception", e)
             abort(401)
-        return func(*args, **kwargs)
     return wrapper
 
 
@@ -31,6 +31,11 @@ def auth_required(func):
         if 'Authorization' not in request.headers:
             abort(401)
         token = data.split("Bearer ")[-1]
-        authService.validate_tokens(token)
-        return func(*args, **kwargs)
+        try:
+            user = jwt.decode(token, secret, algorithms=[algo])
+            return func(*args, **kwargs, user_id=user['id'])
+        except Exception as e:
+            print("JWT Decode Exception", e)
+        abort(401)
+
     return wrapper

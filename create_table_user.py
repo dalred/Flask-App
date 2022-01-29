@@ -35,10 +35,11 @@ def create_table_user():
     }
 
     users = []
-    for item in data_users["user"]:
+    for k, item in enumerate(data_users["user"], 1):
         data = {
             "username": item['username'],
-            "role": item['role']
+            "role": item['role'],
+            "id": k
         }
         tokens = create_tokens(data)
         user = User(username=item['username'],

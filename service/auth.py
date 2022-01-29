@@ -41,7 +41,8 @@ class AuthService:
 
         data = {
             "username": user.username,
-            "role": user.role
+            "role": user.role,
+            "id": user.id
         }
         min30 = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
         data["exp"] = calendar.timegm(min30.timetuple())

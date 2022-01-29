@@ -5,7 +5,7 @@ Content-Type: application/json
 ### Get Запрос Genres
 GET http://127.0.0.1:10001/genres/
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Im9sZWciLCJyb2xlIjoiYWRtaW4iLCJleHAiOjE2NDM0NTM2Njd9.2qFk7v8c14LyUbuVWAaPbL1xdtPapicP_Ml1JQT8Ozo
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Im9sZWciLCJyb2xlIjoiYWRtaW4iLCJleHAiOjE2NDM0Njk4NTF9.3YmqKPaWAoMqHE603laau7CFGXbW247B-qVwdf0-Tgg
 
 ### Get Запрос Genres
 GET http://127.0.0.1:10001/genres/19
