@@ -8,20 +8,20 @@ class AuthService:
     def __init__(self, user_service: UserService):
         self.user_service = user_service
     #Просто мои фантазии, на практике реализация скорее всего другая.
-    def validate_tokens(self, token):
-        try:
-            data = jwt.decode(token, secret, algorithms=[algo])
-            username = data.get('username')
-            # role = data.get('role')
-            # Так как роль не указывается в ПостЗапросе невозможно выполнить связку
-            user = self.user_service.get_by_name(username).first()
-            #user = self.user_service.get_by_username_role(username, role).first()
-            if user.access_token == token:
-                return True
-            else:
-                abort(401)
-        except Exception as e:
-            abort(401)
+    # def validate_tokens(self, token):
+    #     try:
+    #         data = jwt.decode(token, secret, algorithms=[algo])
+    #         username = data.get('username')
+    #         # role = data.get('role')
+    #         # Так как роль не указывается в ПостЗапросе невозможно выполнить связку
+    #         user = self.user_service.get_by_name(username).first()
+    #         #user = self.user_service.get_by_username_role(username, role).first()
+    #         if user.access_token == token:
+    #             return True
+    #         else:
+    #             abort(401)
+    #     except Exception as e:
+    #         abort(401)
 
 
     def generate_tokens(self, data, is_refresh=False):
