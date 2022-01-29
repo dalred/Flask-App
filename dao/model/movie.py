@@ -18,9 +18,11 @@ class Movie(db.Model):
 
 
 class MovieSchema(Schema):
-    id = fields.Int()
+    id = fields.Int(dump_only=True)
     title = fields.Str()
     description = fields.Str()
     trailer = fields.Str()
     year = fields.Int()
     rating = fields.Float()
+    director = fields.Pluck('DirectorSchema', "name", many=False)
+    genre = fields.Pluck('GenreSchema', "name", many=False)

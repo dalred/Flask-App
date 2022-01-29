@@ -1,4 +1,5 @@
 from dao.director import DirectorDAO
+from functions import set_keys
 
 
 class DirectorService:
@@ -14,9 +15,16 @@ class DirectorService:
     def create(self, director_d):
         return self.dao.create(director_d)
 
-    def update(self, director_d):
-        self.dao.update(director_d)
-        return self.dao
+    #Не делаю как в Delete (вызов get_one в методе Dao)
+    #Так как нужно поработать с данными
+    '''
+    director = self.get_one(director_d.get("id"))
+        director.name = director_d.get("name")
+    '''
+    def update(self, data, bid):
+        update = self.dao.get_one(bid)
+        set_keys(data, update)
+        self.dao.update(update)
 
     def delete(self, rid):
         self.dao.delete(rid)

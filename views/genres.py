@@ -1,22 +1,42 @@
 from flask_restx import Resource, Namespace
 
-from dao.model.genre import GenreSchema
+from helpers.decorators import auth_required, admin_required
 from implemented import genre_service
+from dao.model.genre import GenreSchema
+from flask import request, jsonify, make_response
 
-genre_ns = Namespace('genres')
+genres_ns = Namespace('genres')
+genre_schema = GenreSchema()
+genres_schema = GenreSchema(many=True)
 
 
-@genre_ns.route('/')
+@genres_ns.route('/')
 class GenresView(Resource):
+    @auth_required
     def get(self):
-        rs = genre_service.get_all()
-        res = GenreSchema(many=True).dump(rs)
-        return res, 200
+        return make_response(jsonify(genres_schema.dump(genre_service.get_all())), 200)
+
+    @admin_required
+    def post(self):
+        req_json = request.json
+        genre = genre_service.create(req_json)
+        return "", 201, {"location": f"/genres/{genre.id}/"}
 
 
-@genre_ns.route('/<int:rid>')
+@genres_ns.route('/<int:uid>')
 class GenreView(Resource):
-    def get(self, rid):
-        r = genre_service.get_one(rid)
-        sm_d = GenreSchema().dump(r)
-        return sm_d, 200
+    @auth_required
+    def get(self, uid):
+        return make_response(jsonify(genre_schema.dump(genre_service.get_one(uid))), 200)
+
+    @admin_required
+    def put(self, uid: int):
+        req_json = request.json
+        genre_service.update(req_json, uid)
+        return "", 204
+
+    @admin_required
+    def delete(self, uid: int):
+        genre_service.delete(uid)
+        return "", 204
+

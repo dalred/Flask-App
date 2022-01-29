@@ -1,5 +1,5 @@
 from dao.movie import MovieDAO
-
+from functions import set_keys
 
 class MovieService:
     def __init__(self, dao: MovieDAO):
@@ -22,9 +22,10 @@ class MovieService:
     def create(self, movie_d):
         return self.dao.create(movie_d)
 
-    def update(self, movie_d):
-        self.dao.update(movie_d)
-        return self.dao
+    def update(self, data, bid):
+        update = self.dao.get_one(bid)
+        set_keys(data, update)
+        self.dao.update(update)
 
     def delete(self, rid):
         self.dao.delete(rid)
