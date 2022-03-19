@@ -1,7 +1,10 @@
-import datetime, calendar, jwt
-from helpers.constants import SECRET_HERE as secret, algo
+import jwt
+from marshmallow import Schema
+from marshmallow.fields import Int, Str
+from marshmallow_enum import EnumField
 
+from helpers.constants import PWD_SALT
+refresh_token= "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDM4MTY1NTIsInVzZXJfaWQiOjMsInJvbGUiOiJhZG1pbiJ9.tt4_13uZHVmQOeF-2nkbWMYRniyGsTC-AfjFvWNedo4"
+data = jwt.decode(jwt=refresh_token, key=PWD_SALT, algorithms='HS256')
 
-token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Im9sZWciLCJyb2xlIjoiYWRtaW4iLCJpZCI6MywiZXhwIjoxNjQzNDcyNjkzfQ.cKTNgXk8Tm_tSpMb4eWSmkNFjjxE8xZNWzQYhBvkbdU'
-user = jwt.decode(token, secret, algorithms=[algo])
-print(user)
+print(data)

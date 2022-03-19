@@ -1,10 +1,7 @@
-from helpers.constants import algo, SECRET_HERE as secret
 from flask import request, abort
-from implemented import user_service
-import jwt
-from service.auth import AuthService
-authService = AuthService(user_service)
 
+from service.Jwt_token import JwtToken
+from service.enums import UserRole
 
 
 def admin_required(func):
@@ -14,11 +11,10 @@ def admin_required(func):
         data = request.headers['Authorization']
         token = data.split("Bearer ")[-1]
         try:
-            user = jwt.decode(token, secret, algorithms=[algo])
-            role = user.get("role")
-            if role != "admin":
-                abort(400)
-            return func(*args, **kwargs, user_id=user['id'])
+            user = JwtToken.decode_token(token)
+            if user['role'] != UserRole.admin:
+                abort(403)
+            return func(*args, **kwargs, user_id=user['user_id'])
         except Exception as e:
             print("JWT Decode Exception", e)
             abort(401)
@@ -27,15 +23,14 @@ def admin_required(func):
 
 def auth_required(func):
     def wrapper(*args, **kwargs):
-        data = request.headers['Authorization']
+        data = request.headers.get('Authorization', None)
         if 'Authorization' not in request.headers:
             abort(401)
         token = data.split("Bearer ")[-1]
         try:
-            user = jwt.decode(token, secret, algorithms=[algo])
-            return func(*args, **kwargs, user_id=user['id'])
+            user = JwtToken.decode_token(token)
+            return func(*args, **kwargs, user_id=user['user_id'])
         except Exception as e:
             print("JWT Decode Exception", e)
         abort(401)
-
     return wrapper

@@ -13,7 +13,7 @@ def make_user_password_hash(password):
         password.encode('utf-8'),
         secret,
         PWD_HASH_ITERATIONS
-    ))
+    )).decode('utf-8')
 
 def create_tokens(data):
     min30 = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)

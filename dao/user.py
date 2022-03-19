@@ -10,7 +10,7 @@ class UserDAO:
         return all_users.all()
 
     def get_user_by_name(self, name):
-        user = self.session.query(User).filter(User.username == name)
+        user = self.session.query(User).filter(User.username == name).one_or_none()
         return user
 
     def get_user_and_role(self, name, role):
