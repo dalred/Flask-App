@@ -274,7 +274,7 @@ def create_table_user():
             db.session.commit()
     directors = []
     for director in data["directors"]:
-        movies.append(Director(
+        directors.append(Director(
             id=director["pk"],
             name=director["name"],
         ))
