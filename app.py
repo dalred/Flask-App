@@ -36,8 +36,8 @@ def create_data(app):
 app = create_app(Config())
 app.debug = True
 
-if __name__ == '__main__':
-    app.run(host="localhost", port=10001, debug=True)
+# if __name__ == '__main__':
+#     app.run(host="localhost", debug=True)
     #client = app.test_client()  # TODO вы можете раскомментировать
     #response = client.post('/movies/', json=INSTANCE_movie)
     # with app.app_context():
