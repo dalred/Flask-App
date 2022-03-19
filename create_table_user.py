@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from dao.model.user import User
 from setup_db import db
 import base64
@@ -6,6 +7,7 @@ from helpers.constants import SECRET_HERE as secret, PWD_HASH_ITERATIONS, algo
 from dao.model.director import Director
 from dao.model.movie import Movie
 from dao.model.genre import Genre
+
 
 def make_user_password_hash(password):
     return base64.b64encode(hashlib.pbkdf2_hmac(
@@ -255,9 +257,9 @@ def create_table_user():
             {"name": "Мультфильм", "pk": 16}, {"name": "Вестерн", "pk": 17}, {"name": "Мюзикл", "pk": 18}],
     }
     # -------------------------------------------------------
-
+    movies = []
     for movie in data["movies"]:
-        m = Movie(
+        movies.append(Movie(
             id=movie["pk"],
             title=movie["title"],
             description=movie["description"],
@@ -266,24 +268,26 @@ def create_table_user():
             rating=movie["rating"],
             genre_id=movie["genre_id"],
             director_id=movie["director_id"],
-        )
+        ))
         with db.session.begin():
-            db.session.add(m)
-
+            db.session.add_all(movies)
+            db.session.commit()
+    directors = []
     for director in data["directors"]:
-        d = Director(
+        movies.append(Director(
             id=director["pk"],
             name=director["name"],
-        )
+        ))
         with db.session.begin():
-            db.session.add(d)
-
+            db.session.add_all(directors)
+            db.session.commit()
+    genres = []
     for genre in data["genres"]:
-        d = Genre(
+        genres.append(Genre(
             id=genre["pk"],
             name=genre["name"],
-        )
+        ))
         with db.session.begin():
-            db.session.add(d)
+            db.session.add_all(genres)
             db.session.commit()
 

@@ -63,8 +63,16 @@ Content-Type: application/json
   "username": "vasya",
   "password": "my_little_pony"
 }
-
 ###
+POST http://127.0.0.1:10001/auth/
+Content-Type: application/json
+
+{
+  "username": "oleg",
+  "password": "qwerty"
+}
+
+###создание
 POST http://127.0.0.1:10001/users/
 Content-Type: application/json
 
