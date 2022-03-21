@@ -7,7 +7,7 @@ class Movie(db.Model):
     __tablename__ = 'movie'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
-    description = db.Column(db.String(255))
+    description = db.Column(db.String())
     trailer = db.Column(db.String(255))
     year = db.Column(db.Integer)
     rating = db.Column(db.Float)

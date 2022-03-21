@@ -257,6 +257,24 @@ def create_table_user():
             {"name": "Мультфильм", "pk": 16}, {"name": "Вестерн", "pk": 17}, {"name": "Мюзикл", "pk": 18}],
     }
     # -------------------------------------------------------
+    genres = []
+    for genre in data["genres"]:
+        genres.append(Genre(
+            id=genre["pk"],
+            name=genre["name"],
+        ))
+        with db.session.begin():
+            db.session.add_all(genres)
+            db.session.commit()
+    directors = []
+    for director in data["directors"]:
+        directors.append(Director(
+            id=director["pk"],
+            name=director["name"],
+        ))
+        with db.session.begin():
+            db.session.add_all(directors)
+            db.session.commit()
     movies = []
     for movie in data["movies"]:
         movies.append(Movie(
@@ -272,22 +290,3 @@ def create_table_user():
         with db.session.begin():
             db.session.add_all(movies)
             db.session.commit()
-    directors = []
-    for director in data["directors"]:
-        directors.append(Director(
-            id=director["pk"],
-            name=director["name"],
-        ))
-        with db.session.begin():
-            db.session.add_all(directors)
-            db.session.commit()
-    genres = []
-    for genre in data["genres"]:
-        genres.append(Genre(
-            id=genre["pk"],
-            name=genre["name"],
-        ))
-        with db.session.begin():
-            db.session.add_all(genres)
-            db.session.commit()
-

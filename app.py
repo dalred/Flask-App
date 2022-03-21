@@ -14,7 +14,8 @@ from create_table_user import create_table_user
 
 def create_app(config_object):
     app = Flask(__name__)
-    app.config.from_object(config_object)
+    #app.config.from_object(config_object)
+    app.config.from_envvar('APP_SETTINGS', silent=True)
     register_extensions(app)
     return app
 
