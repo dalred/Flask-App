@@ -1,0 +1,22 @@
+version: "3"
+services:
+  api:
+    build:
+      context: .
+    ports:
+    - 8080:80
+  depends_on:
+      postgres:
+        condition: service_healthy
+  postgres:
+    image: postgres:latest
+    volumes:
+      - /var/lib/postgresql/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: skyproskypro123
+      POSTGRES_DB: movies
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
