@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restx import Api
 
+from flask_migrate import Migrate
 from config import Config
 from setup_db import db
 from views.directors import directors_ns
@@ -14,8 +15,8 @@ from create_table_user import create_table_user
 
 def create_app(config_object):
     app = Flask(__name__)
-    #app.config.from_object(config_object)
-    app.config.from_envvar('APP_SETTINGS', silent=True)
+    app.config.from_object(config_object)
+    #app.config.from_envvar('APP_SETTINGS', silent=True)
     register_extensions(app)
     return app
 
@@ -28,13 +29,14 @@ def register_extensions(app):
     api.add_namespace(movies_ns)
     api.add_namespace(users_ns)
     api.add_namespace(auth_ns)
-    #create_data(app)
+    create_data(app)
 
 def create_data(app):
     with app.app_context():
         create_table_user()
 
 app = create_app(Config())
+migrate = Migrate(app, db)
 app.debug = True
 
 # if __name__ == '__main__':

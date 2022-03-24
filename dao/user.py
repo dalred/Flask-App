@@ -26,6 +26,7 @@ class UserDAO:
         return user
 
     def create_user(self, data):
+        #data['password']= str(data['password'].decode('utf-8'))
         new_user = User(**data)
         self.session.add(new_user)
         self.session.commit()

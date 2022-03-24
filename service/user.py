@@ -55,7 +55,7 @@ class UserService:
             password.encode('utf-8'),
             SECRET_HERE,
             PWD_HASH_ITERATIONS
-        ))
+        )).decode('utf-8')
 
     def compare_passwords(self, password_hash, other_password) -> bool:
         return hmac.compare_digest(

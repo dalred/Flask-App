@@ -9,7 +9,7 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
-    password = db.Column(db.String)
+    password = db.Column(db.String(255))
     role = db.Column(db.Enum(UserRole))
     access_token = db.Column(db.String)
     refresh_token = db.Column(db.String)
