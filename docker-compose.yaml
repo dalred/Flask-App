@@ -1,22 +1,35 @@
-version: "3"
+version: "3.9"
 services:
   api:
-    build:
-      context: .
+    container_name: flask-app
+    image: dalred/flask-app:version-1
     ports:
-    - 8080:80
-  depends_on:
+      - 8080:80
+    depends_on:
       postgres:
         condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+  migrations:
+    container_name: migrations
+    image: dalred/flask-app:version-1
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: flask db upgrade
   postgres:
+    container_name: postgres
     image: postgres:latest
     volumes:
       - /var/lib/postgresql/data:/var/lib/postgresql/data
     environment:
+      POSTGRES_USER: flaskappuserdb
       POSTGRES_PASSWORD: skyproskypro123
       POSTGRES_DB: movies
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -d movies -U flaskappuserdb"]
       interval: 5s
       timeout: 5s
       retries: 5
+      start_period: 10s
+
