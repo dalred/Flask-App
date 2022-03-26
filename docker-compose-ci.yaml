@@ -2,7 +2,7 @@ version: "3.9"
 services:
   api:
     container_name: flask-app
-    image: dalred/flask-app:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: dalred/flask-app:$GITHUB_REF_NAME-version-$GITHUB_RUN_ID
     ports:
       - 8080:80
     depends_on:
@@ -12,7 +12,7 @@ services:
         condition: service_completed_successfully
   migrations:
     container_name: migrations
-    image: dalred/flask-app:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: dalred/flask-app:$GITHUB_REF_NAME-version-$GITHUB_RUN_ID
     depends_on:
       postgres:
         condition: service_healthy
@@ -32,5 +32,3 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-
-
