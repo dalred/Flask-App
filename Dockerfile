@@ -13,6 +13,5 @@ COPY helpers helpers
 COPY implemented.py .
 COPY setup_db.py .
 COPY create_table_user.py .
-COPY flask-app.service.example .
 
 CMD flask run -h 0.0.0.0 -p 80
