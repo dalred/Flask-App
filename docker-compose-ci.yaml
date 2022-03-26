@@ -12,7 +12,7 @@ services:
         condition: service_completed_successfully
   migrations:
     container_name: migrations
-    image: dalred/flask-app:version-1::$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    image: dalred/flask-app:version-1:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     depends_on:
       postgres:
         condition: service_healthy
@@ -23,9 +23,9 @@ services:
     volumes:
       - /var/lib/postgresql/data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: flaskappuserdb
-      POSTGRES_PASSWORD: skyproskypro123
-      POSTGRES_DB: movies
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DB: $DB_NAME
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d movies -U flaskappuserdb"]
       interval: 5s
