@@ -1,7 +1,7 @@
-FROM python:3.8-slim
+FROM python:3.8.3-slim
 WORKDIR /code
 COPY . .
-python3 -m pip install -r requirements.txt
+python -m pip install -r requirements.txt
 
 CMD flask run -h 0.0.0.0 -p 80
 
