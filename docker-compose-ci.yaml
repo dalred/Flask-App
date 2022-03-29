@@ -24,9 +24,8 @@ services:
       POSTGRES_USER: $DB_USER
       POSTGRES_PASSWORD: $DB_PASSWORD
       POSTGRES_DB: $DB_NAME
-      HOME_USER: $SSH_USERNAME
     volumes:
-      - /$HOME_USER/flask-app/post_gre_movies.sql:/docker-entrypoint-initdb.d/init.sql
+      - /$SSH_USERNAME/flask-app/post_gre_movies.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $DB_NAME -U $DB_USER"]
       interval: 5s
