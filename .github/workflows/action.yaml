@@ -53,8 +53,9 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: $SSH_USERNAME
-          password: ${{ secrets.SSH_PASSWORD }}
+          password: ${{ secrets.SSH_PASSWORD }} 
           script: |
+            echo homepath $HOMEPATH
             cd flask-app
             echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose down
             echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose up -d
