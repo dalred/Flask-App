@@ -43,7 +43,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "deploy/docker-compose.yaml, deploy/post_gre_movies.sql"
+          source: "deploy/docker-compose.yaml,post_gre_movies.sql"
           target: "flask-app"
           strip_components: 1
       - name: run docker-compose
