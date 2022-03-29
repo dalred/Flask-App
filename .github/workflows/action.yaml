@@ -36,8 +36,9 @@ jobs:
       - name: render configs
         run: |
           mkdir deploy
-          echo post_gre_movies.sql
+          cat post_gre_movies.sql
           cat docker-compose-ci.yaml | envsubst > deploy/docker-compose.yaml
+          echo ls-lav deploy
       - name: clone files to server
         uses: appleboy/scp-action@master
         with:
